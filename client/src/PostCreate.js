@@ -5,14 +5,14 @@ const PostCreate = () => {
 
     const [title, setTitle] = useState('');
 
-    const onSubmit = async (event) => {
+    const onSubmit = (event) => {
         event.preventDefault();
 
-        await axios.post('http://localhost:4000/posts', {
+        axios.post('http://localhost:4000/posts', {
             title,
-        });
-
-        setTitle('');
+        }).then(response => {
+            setTitle('');
+        }). catch (error => {console.log("Unable to create the post")});
     };
 
     return (

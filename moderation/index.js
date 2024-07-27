@@ -14,23 +14,40 @@ const check = (str) => {
     return regex.test(str);  
 }
 
+const handleEvent = async(event) => {
+    console.log(event.type);
+    if(event.type==='CommentCreated'){
+        console.log(event.data.status);
+        if(event.data.status==='pending'){
+            console.log(event);
+            const result = check(event.data.content);
+            if(result)  event.data.status = 'Rejected';
+            else    event.data.status = 'Approved';
+
+            await axios.post('http://localhost:4005/events', {
+                type: 'CommentModerated',
+                data: event.data,
+            });
+        }
+    }
+}
+
 app.post('/events', async (req,res) => {
     const event = req.body;
-    if(event.type==='CommentCreated'){
-        const result = check(event.data.content);
-        console.log(result, event.data.content);
-        if(result)  event.data.status = 'Rejected';
-        else    event.data.status = 'Approved';
-
-        await axios.post('http://localhost:4005/events', {
-            type: 'CommentModerated',
-            data: event.data,
-        });
-    }
+    handleEvent(event);
     return res.status(201).send();
 });
 
 const port = process.env.PORT;
-app.listen(port, () => {
+app.listen(port, async () => {
     console.log('Listening on port', port);
+    axios.get('http://localhost:4005/events')
+        .then(response => {
+            const events = response.data;
+            events.forEach(event => {
+                handleEvent(event.event);
+            })
+        }).catch(err => {
+            console.log(`Error in fetching events ${err.message}`);
+    });
 });

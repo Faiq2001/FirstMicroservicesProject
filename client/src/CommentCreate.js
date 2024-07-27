@@ -4,14 +4,16 @@ import axios from "axios";
 const CommentCreate = ({ postId }) => {
     const [content, setContent] = useState('');
 
-    const onSubmit = async(event) => {
+    const onSubmit = (event) => {
         event.preventDefault();
 
-        await axios.post(`http://localhost:4001/posts/${postId}/comments`, {
+        axios.post(`http://localhost:4001/posts/${postId}/comments`, {
             content
-        });
+        }).then(response => {
+            setContent('');
+        }).catch(error=> {console.log("Unable to create the comment")});
 
-        setContent('');
+        
     }
 
     return (

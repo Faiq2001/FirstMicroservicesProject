@@ -6,10 +6,12 @@ import CommentList from './CommentList';
 const PostList =  () => {
     const [posts, setPosts] = useState({});
 
-    const fetchPosts = async () => {
-        const res = await axios.get('http://localhost:4002/posts');
-        console.log(res.data);
-        setPosts(res.data);
+    const fetchPosts = () => {
+        axios.get('http://localhost:4002/posts')
+        .then(response => {
+            console.log(response.data);
+            setPosts(response.data);
+        }).catch(error => {console.log("Unable to fetch posts")});
     };
 
     useEffect(() => {

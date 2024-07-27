@@ -11,6 +11,15 @@ app.use(cors());
 
 const commentsByPostId = {};
 
+const handleEvent = async (type, data) => {
+    if(type==='CommentModerated'){
+        await axios.post('http://localhost:4005/events',{
+            type: 'CommentUpdated',
+            data,
+        });
+    }
+}
+
 app.get('/posts/:id/comments', (req,res) => {
     res.status(201).send(commentsByPostId[req.params.id] || []);
 });
@@ -39,18 +48,21 @@ app.post('/posts/:id/comments', async (req,res) => {
 });
 
 app.post('/events', async (req,res) => {
-
-    if(req.body.type==='CommentModerated'){
-        await axios.post('http://localhost:4005/events',{
-            type: 'CommentUpdated',
-            data: req.body.data
-        });
-    }
-
+    const { type, data } = req.body;
+    handleEvent(type,data);
     res.status(201).send();
 });
 
 const port = process.env.PORT;
-app.listen(port, () => {
-    console.log("Listening to port", port);    
+app.listen(port,() => {
+    console.log("Listening to port", port); 
+    axios.get('http://localhost:4005/events')
+    .then(response => {
+        const events = response.data;
+        events.forEach(event=> {
+            handleEvent(event.event.type, event.event.data);
+        });
+    }).catch(error=> {
+        console.log("Unable to get events", error);
+    })
 });
