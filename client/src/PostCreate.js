@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-export default () => {
+const PostCreate = () => {
 
     const [title, setTitle] = useState('');
 
@@ -30,3 +30,5 @@ export default () => {
         </form>
     </div>
 )};
+
+export default PostCreate;

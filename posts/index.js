@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const { randomBytes } = require('crypto');
+const axios = require('axios');
 require('dotenv').config();
 
 const app = express();
@@ -14,7 +15,7 @@ app.get('/posts', (req,res) => {
     res.status(201).send(posts);
 });
 
-app.post('/posts', (req,res) => {
+app.post('/posts', async (req,res) => {
 
     const { title } = req.body;
     const id = randomBytes(4).toString('hex');
@@ -24,7 +25,18 @@ app.post('/posts', (req,res) => {
         title
     };
 
+    await axios.post("http://localhost:4005/events", {
+        type: "PostCreated",
+        data: {
+            id, title
+        }
+    });
     res.status(201).send(posts[id]);
+});
+
+app.post('/events', (req,res) => {
+    console.log("Recieved Event", req.body.type);
+    res.status(201).send();
 });
 
 const port = process.env.PORT;
