@@ -24,7 +24,7 @@ const handleEvent = async(event) => {
             if(result)  event.data.status = 'Rejected';
             else    event.data.status = 'Approved';
 
-            await axios.post('http://localhost:4005/events', {
+            await axios.post('http://event-bus-srv:4005/events', {
                 type: 'CommentModerated',
                 data: event.data,
             });
@@ -38,10 +38,10 @@ app.post('/events', async (req,res) => {
     return res.status(201).send();
 });
 
-const port = process.env.PORT;
-app.listen(port, async () => {
+const port = process.env.PORT||4003;
+app.listen(port, () => {
     console.log('Listening on port', port);
-    axios.get('http://localhost:4005/events')
+    axios.get('http://event-bus-srv:4005/events')
         .then(response => {
             const events = response.data;
             events.forEach(event => {

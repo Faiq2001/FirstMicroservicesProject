@@ -47,10 +47,10 @@ app.post('/events', (req,res) => {
     res.status(201).send(posts);
 });
 
-const port = process.env.PORT;
+const port = process.env.PORT||4002;
 app.listen(port, () => {
     console.log('Listening on Port', port);
-    axios.get('http://localhost:4005/events')
+    axios.get('http://event-bus-srv:4005/events')
         .then(response => {
             const events = response.data;
             events.forEach(event => {
@@ -59,6 +59,6 @@ app.listen(port, () => {
             })
         })
         .catch (error => {
-            console.log("Unable to get events", error.message);
+            console.log("Error in fetching events", error.message);
     });
 });

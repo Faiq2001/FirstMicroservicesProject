@@ -12,7 +12,7 @@ app.use(cors());
 const posts ={};
 
 app.get('/posts', (req,res) => {
-    res.status(201).send(posts);
+    res.status(201).send(`Here are all the posts: ${posts}`);
 });
 
 app.post('/posts', async (req,res) => {
@@ -25,7 +25,7 @@ app.post('/posts', async (req,res) => {
         title
     };
 
-    await axios.post("http://localhost:4005/events", {
+    await axios.post("http://event-bus-srv:4005/events", {
         type: "PostCreated",
         data: {
             id, title
@@ -39,16 +39,16 @@ app.post('/events', (req,res) => {
     res.status(201).send();
 });
 
-const port = process.env.PORT;
+const port = process.env.PORT || 4000;
 app.listen(port, () => {
     console.log('Listening on Port',port);
-    axios.get('http://localhost:4005/events')
+    axios.get('http://event-bus-srv:4005/events')
     .then(response => {
         const events = response.data;
         events.forEach(event=>{
             /*handleEvents here*/
         });
     }).catch (error => {
-        console.log("Unable to get events", error);
+        console.log(`Error in fetching events ${error}`);
     });
 });
