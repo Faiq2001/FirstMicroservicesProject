@@ -12,10 +12,10 @@ app.use(cors());
 const posts ={};
 
 app.get('/posts', (req,res) => {
-    res.status(201).send(`Here are all the posts: ${posts}`);
+    res.status(201).json(posts);
 });
 
-app.post('/posts', async (req,res) => {
+app.post('/posts/create', async (req,res) => {
 
     const { title } = req.body;
     const id = randomBytes(4).toString('hex');
