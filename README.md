@@ -44,9 +44,10 @@ Before running the project, ensure you have the following installed on your loca
 
 Clone the repository to your local machine:
 
-````bash
+```bash
 git clone https://github.com/your-username/your-repo.git
 cd your-repo
+```
 
 ## Running the Application
 
@@ -55,6 +56,7 @@ To run the application, follow these steps:
 1. **Start Docker Desktop**: Ensure Docker Desktop is running on your machine. This will handle containerization and the Docker daemon.
 
 2. **Set Up Kubernetes**:
+
    - **Start Kubernetes**: Make sure Kubernetes is running. Docker Desktop provides an integrated Kubernetes cluster that you can enable in its settings.
    - **Install Ingress Controller**: Apply the Ingress controller configuration to your Kubernetes cluster:
 
@@ -63,9 +65,11 @@ To run the application, follow these steps:
      ```
 
 3. **Install Skaffold**:
+
    - Download and install Skaffold from the [Skaffold installation guide](https://skaffold.dev/docs/install/#standalone-binary).
 
 4. **Deploy the Application**:
+
    - Navigate to your project directory where the `skaffold.yaml` file is located.
 
      ```bash
@@ -79,6 +83,7 @@ To run the application, follow these steps:
      ```
 
 5. **Access the Application**:
+
    - Once the services have started and are listening, you can access the application by opening your browser and navigating to:
 
      ```
@@ -114,4 +119,8 @@ Contributions to this project are welcome! If you'd like to contribute, please f
    ```bash
    git clone https://github.com/your-username/your-repo.git
    cd your-repo
-````
+   ```
+
+```
+
+```
