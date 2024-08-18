@@ -121,6 +121,32 @@ Contributions to this project are welcome! If you'd like to contribute, please f
    cd your-repo
    ```
 
+3. **Create a Branch**: Create a new branch for your changes and switch to it:
+
+```bash
+Copy code
+git checkout -b feature/your-feature-name
 ```
 
+4. **Make Your Changes**: Implement your changes. Ensure your code adheres to the project's coding style and includes necessary tests.
+
+5. **Commit Your Changes**: Commit your changes with a descriptive message:
+
+```bash
+Copy code
+git add .
+git commit -m "Brief description of your changes"
 ```
+
+6. **Push Your Changes**: Push your branch to your forked repository:
+
+```bash
+Copy code
+git push origin feature/your-feature-name
+```
+
+7. **Open a Pull Request**: Go to the original repository on GitHub and open a pull request from your branch. Provide a detailed description of your changes and their purpose.
+
+8. **Address Feedback**: Review any feedback from maintainers and make the necessary adjustments.
+
+If you have any questions or need assistance, please open an issue or contact us directly. We appreciate your contributions!
